@@ -1,22 +1,30 @@
-var functionalityWrapper = document.createElement('div');
-functionalityWrapper.setAttribute('id', 'functionalityWrapper');
-functionalityWrapper.setAttribute('height', '300px');
+var functionalityWrapperDiv = document.createElement('div');
+functionalityWrapperDiv.setAttribute('id', 'functionalityWrapper');
+functionalityWrapperDiv.setAttribute('height', '300px');
 
-functionalityWrapper.setAttribute('background-color', 'rgb(156, 154, 154);');
-document.getElementById('programHome').appendChild(functionalityWrapper);
+functionalityWrapperDiv.setAttribute('background-color', 'rgb(156, 154, 154);');
+document.getElementById('programHome').appendChild(functionalityWrapperDiv);
 
-var paintBoard = document.getElementById('paintBoard');
+var paintBoardDiv = document.getElementById('paintBoard');
 
-paintBoard.innerHTML = "<table>";
+var canvas = document.createElement('table');
+canvas.setAttribute('id', 'canvasArea');
+canvas.setAttribute('height', '600px');
+canvas.setAttribute('width', '600px');
+paintBoardDiv.appendChild(canvas);
+
 for (var i = 0; i < 5; i++){
-    paintBoard.innerHTML = "<tr>";
+    var row = document.createElement('tr');
+    row.setAttribute('id', 'row' + i);
+    canvas.appendChild(row);
     for (var j = 0; j < 5; j++){
-        if ((j + i) % 2 == 0){
-            paintBoard.innerHTML = "<td class='dark'></td>";
-        }else {
-            paintBoard.innerHTML = "<td class='light'></td>";
-        }
+        var cell = document.createElement('td');
+        cell.setAttribute('id', 'cell' + i + j);
+        cell.setAttribute('height', '5px');
+        cell.setAttribute('width', '5px');
+        cell.setAttribute('background-color', 'blue');
+        row.appendChild(cell);
     }
-    paintBoard.innerHTML = "</tr>";
+    
 }
-paintBoard.innerHTML = "</table>";
+
