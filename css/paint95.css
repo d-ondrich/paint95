@@ -39,9 +39,21 @@
     justify-content: flex-start;
 }
 #paletteWrapper{
-    height: 502px; 
+    height: 500px; 
     width: 10%; 
     background: rgb(156, 154, 154); 
     margin: 0; 
     padding: 0;
+}
+#colorWrapper{
+    background: rgb(156, 154, 154); 
+    height: 100px;
+}
+.cellStyle{
+    background: blue; 
+    height: 2px; 
+    width: 2px;
+}
+.rowStyle{
+    height: 2px;
 }
