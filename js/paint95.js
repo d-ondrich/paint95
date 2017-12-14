@@ -15,6 +15,17 @@ canvas.setAttribute('id', 'canvasArea');
 canvas.style = "background: white; height: 500px; width: 500px; border: solid 2px black;";
 paintBoardDiv.appendChild(canvas);
 
+var colorArray = ["black", "white", "blue", "red", "green", "orange", "pink", "purple", ]
+
+for (var k = 0; k < 8; k++){
+    var colorButton = document.createElement('button');
+    colorButton.class = "colorButton";
+    colorButton.id = colorArray[k];
+    colorButton.innerHTML = colorArray[k];
+    document.getElementById("colorPalette").appendChild(colorButton);
+}
+
+
 
 // for (var i = 0; i < 250; i++){
 //     var row = document.createElement('div');

@@ -57,3 +57,14 @@
 .rowStyle{
     height: 2px;
 }
+.colorButton{
+    height: 15px;
+    width: 15px;
+    border: solid 1px black;
+}
+#colorPalette{
+    height: 200px;
+    width: 300px;
+
+}
+
