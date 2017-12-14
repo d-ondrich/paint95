@@ -9,20 +9,17 @@ var paintBoardDiv = document.getElementById('paintBoard');
 
 var canvas = document.createElement('table');
 canvas.setAttribute('id', 'canvasArea');
-canvas.setAttribute('height', '600px');
-canvas.setAttribute('width', '600px');
+canvas.style = "background: blue; height: 600px; width: 600px;";
 paintBoardDiv.appendChild(canvas);
 
-for (var i = 0; i < 5; i++){
+for (var i = 0; i < 300; i++){
     var row = document.createElement('tr');
     row.setAttribute('id', 'row' + i);
     canvas.appendChild(row);
-    for (var j = 0; j < 5; j++){
+    for (var j = 0; j < 300; j++){
         var cell = document.createElement('td');
         cell.setAttribute('id', 'cell' + i + j);
-        cell.setAttribute('height', '5px');
-        cell.setAttribute('width', '5px');
-        cell.setAttribute('background-color', 'blue');
+        cell.style = "background: blue; height: 2px; width: 2px;";
         row.appendChild(cell);
     }
     
