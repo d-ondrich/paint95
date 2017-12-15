@@ -21,18 +21,23 @@ for (var k = 0; k < 8; k++){
     var colorButton = document.createElement('button');
     colorButton.class = "colorButton";
     colorButton.backgroundColor = colorArray[k];
-    colorButton.id = colorArray[k] + k;
+    colorButton.isSelected = false;
+    colorButton.id = colorArray[k];
     colorButton.innerHTML = colorArray[k];
-    colorButton.addEventListener
+    colorButton.addEventListener('click', colorSelection);
     document.getElementById("colorPalette").appendChild(colorButton);
+}
+var currentPaintBrushColor;
+function colorSelection(){
+    currentPaintBrushColor = this.id;
 }
 
 var paint = {};
 
-//paint.paintStroke = function(){
-    var canvasAreaVar = document.getElementById('canvasArea');
-    canvasAreaVar.addEventListener('click',paintColor);
-//};
+
+var canvasAreaVar = document.getElementById('canvasArea');
+canvasAreaVar.addEventListener('click',paintColor);
+
 
 
  function paintColor(e){
@@ -40,25 +45,10 @@ var paint = {};
         var brushDiv = document.createElement('div'); 
         brushDiv.style.height = '5px';
         brushDiv.style.width = '5px';
-        brushDiv.style.backgroundColor = 'black';
+        brushDiv.style.backgroundColor = currentPaintBrushColor;
         brushDiv.style.position = 'absolute';
         brushDiv.style.top = e.pageY - this.offsetTop + "px";
         brushDiv.style.left = e.pageX - this.offsetLeft + "px";
         canvasAreaVar.appendChild(brushDiv);
 };
-
-
-// for (var i = 0; i < 250; i++){
-//     var row = document.createElement('div');
-//     row.setAttribute('id', 'row' + i);
-//     row.class = "rowStyle";
-//     canvas.appendChild(row);
-//     for (var j = 0; j < 250; j++){
-//         var cell = document.createElement('div');
-//         cell.setAttribute('id', 'cell' + i + j);
-//         cell.class = "cellStyle";
-//         row.appendChild(cell);
-//     }
-    
-// }
 
