@@ -35,10 +35,9 @@ document.getElementById('colorWrapper').appendChild(colorPaletteVar);
 for (var k = 0; k < 8; k++){
     var colorButton = document.createElement('button');
     colorButton.class = "colorButton";
-    colorButton.backgroundColor = colorArray[k];
+    colorButton.style= "background-Color: " + colorArray[k] + "; height: 30px; width: 30px;";
     colorButton.isSelected = false;
     colorButton.id = colorArray[k];
-    colorButton.innerHTML = colorArray[k];
     colorButton.addEventListener('click', colorSelection);
     document.getElementById("colorPalette").appendChild(colorButton);
 }
