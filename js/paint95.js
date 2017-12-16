@@ -29,22 +29,24 @@ for (var k = 0; k < 8; k++){
 }
 var currentPaintBrushColor;
 function colorSelection(){
+    if (this.id == 'eraserButton'){
+        currentPaintBrushColor = 'white';
+        console.log("eraser working");
+    } else {
     currentPaintBrushColor = this.id;
+    }
 }
-
-var paint = {};
-
 
 var canvasAreaVar = document.getElementById('canvasArea');
 canvasAreaVar.addEventListener('click',paintColor);
 
-
+var brushSize = '5px';
 
  function paintColor(e){
     var canvasAreaVar = document.getElementById('canvasArea');
         var brushDiv = document.createElement('div'); 
-        brushDiv.style.height = '5px';
-        brushDiv.style.width = '5px';
+        brushDiv.style.height = brushSize;
+        brushDiv.style.width = brushSize;
         brushDiv.style.backgroundColor = currentPaintBrushColor;
         brushDiv.style.position = 'absolute';
         brushDiv.style.top = e.pageY - this.offsetTop + "px";
@@ -52,3 +54,9 @@ canvasAreaVar.addEventListener('click',paintColor);
         canvasAreaVar.appendChild(brushDiv);
 };
 
+var eraserButtonVar = document.createElement('button');
+eraserButtonVar.id = 'eraserButton';
+eraserButtonVar.innerHTML = "Eraser";
+eraserButtonVar.isSelected = false;
+eraserButtonVar.addEventListener('click', colorSelection);
+document.getElementById('paletteWrapper').appendChild(eraserButtonVar);
