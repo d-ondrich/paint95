@@ -44,6 +44,9 @@
     background: rgb(156, 154, 154); 
     margin: 0; 
     padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 #colorWrapper{
     background: rgb(156, 154, 154); 

@@ -52,7 +52,7 @@ function colorSelection(){
 }
 var brushSize = '5px';
 
-var enablePaint;
+//var enablePaint;
 var allowPaint = false;
 
 function start(){
@@ -161,4 +161,30 @@ document.getElementById('paletteWrapper').appendChild(clearButtonVar);
 
 function clearCanvas(){
     document.getElementById('canvasArea').innerHTML = "";
+}
+
+var saveButtonVar = document.createElement('button');
+saveButtonVar.id = 'saveButton';
+saveButtonVar.innerHTML = "Save";
+saveButtonVar.addEventListener('click', saveCanvas);
+document.getElementById('paletteWrapper').appendChild(saveButtonVar);
+
+function saveCanvas(){
+    var canvasSaveName = prompt("Enter file name:");
+    var canvasAreaVar = document.getElementById('canvasArea').innerHTML;
+    canvasSaveName = JSON.stringify(canvasSaveName);
+    canvasAreaVar = JSON.stringify(canvasAreaVar);
+    localStorage.setItem(canvasSaveName, canvasAreaVar);
+}
+
+var loadButtonVar = document.createElement('button');
+loadButtonVar.id = 'loadButton';
+loadButtonVar.innerHTML = "Load";
+loadButtonVar.addEventListener('click', loadCanvas);
+document.getElementById('paletteWrapper').appendChild(loadButtonVar);
+
+function loadCanvas(){
+    var canvasLoadName = prompt("Enter file name to load:");
+    canvasLoadName = JSON.stringify(canvasLoadName);
+    document.getElementById('canvasArea').innerHTML = JSON.parse(localStorage.getItem(canvasLoadName));
 }
