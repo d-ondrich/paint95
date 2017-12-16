@@ -13,6 +13,10 @@ paintBoardVar.id = 'paintBoard';
 paintBoardVar.style = "width: 100%;";
 document.getElementById('programHome').appendChild(paintBoardVar);
 
+var paletteWrapperVar = document.createElement('div');
+paletteWrapperVar.id = 'paletteWrapper';
+document.getElementById('paintBoard').appendChild(paletteWrapperVar);
+
 var canvas = document.createElement('div');
 canvas.setAttribute('id', 'canvasArea');
 canvas.style = "background: white; height: 500px; width: 500px; border: solid 2px black; position:relative;";
@@ -20,15 +24,10 @@ paintBoardVar.appendChild(canvas);
 
 var colorArray = ["black", "white", "blue", "red", "green", "orange", "pink", "purple" ];
 
-
-
 var colorWrapperVar = document.createElement('div');
 colorWrapperVar.id = 'colorWrapper';
 document.getElementById('programHome').appendChild(colorWrapperVar);
 
-var paletteWrapperVar = document.createElement('div');
-paletteWrapperVar.id = 'paletteWrapper';
-document.getElementById('paintBoard').appendChild(paletteWrapperVar);
 
 var colorPaletteVar = document.createElement('div');
 colorPaletteVar.id = 'colorPalette';
