@@ -52,13 +52,29 @@ function colorSelection(){
 }
 var brushSize = '5px';
 
-// var enablePaint;
+var enablePaint;
+var allowPaint = false;
 
-// function start(event){
-//     enablePaint = setInterval(function() {paintColor(event)}, 100);
-// }
+function start(){
+    allowPaint = true;
+    //enablePaint = setInterval(paintColor, 100);
+}
 
 function paintColor(event){
+    if (allowPaint){
+        var canvasAreaVar = document.getElementById('canvasArea');
+            var brushDiv = document.createElement('div'); 
+            brushDiv.style.height = brushSize;
+            brushDiv.style.width = brushSize;
+            brushDiv.style.backgroundColor = currentPaintBrushColor;
+            brushDiv.style.position = 'absolute';
+            brushDiv.style.top = event.pageY - this.offsetTop + "px";
+            brushDiv.style.left = event.pageX - this.offsetLeft + "px";
+            canvasAreaVar.appendChild(brushDiv);
+    }
+};
+
+function paintSingleColor(event){
     var canvasAreaVar = document.getElementById('canvasArea');
         var brushDiv = document.createElement('div'); 
         brushDiv.style.height = brushSize;
@@ -70,14 +86,17 @@ function paintColor(event){
         canvasAreaVar.appendChild(brushDiv);
 };
 
-// function stop(){
-//     clearInterval(enablePaint);
-// }
+function stop(){
+    //clearInterval(enablePaint);
+    allowPaint = false;
+}
 
 var canvasAreaVar = document.getElementById('canvasArea');
-//canvasAreaVar.addEventListener('mousedown', start);
-canvasAreaVar.addEventListener('click',paintColor);
-//canvasAreaVar.addEventListener('mouseup', stop);
+canvasAreaVar.addEventListener('mousedown', start);
+canvasAreaVar.addEventListener('mousedown',paintSingleColor);
+canvasAreaVar.addEventListener('mousemove', paintColor);
+canvasAreaVar.addEventListener('mouseup', stop);
+canvasAreaVar.addEventListener('mouseout', stop);
 
 var eraserButtonVar = document.createElement('button');
 eraserButtonVar.id = 'eraserButton';
