@@ -28,7 +28,6 @@ var colorWrapperVar = document.createElement('div');
 colorWrapperVar.id = 'colorWrapper';
 document.getElementById('programHome').appendChild(colorWrapperVar);
 
-
 var colorPaletteVar = document.createElement('div');
 colorPaletteVar.id = 'colorPalette';
 document.getElementById('colorWrapper').appendChild(colorPaletteVar);
@@ -54,21 +53,32 @@ function colorSelection(){
 }
 var brushSize = '5px';
 
-var canvasAreaVar = document.getElementById('canvasArea');
-canvasAreaVar.addEventListener('click',paintColor);
+// var enablePaint;
 
+// function start(event){
+//     enablePaint = setInterval(function() {paintColor(event)}, 100);
+// }
 
-function paintColor(e){
+function paintColor(event){
     var canvasAreaVar = document.getElementById('canvasArea');
         var brushDiv = document.createElement('div'); 
         brushDiv.style.height = brushSize;
         brushDiv.style.width = brushSize;
         brushDiv.style.backgroundColor = currentPaintBrushColor;
         brushDiv.style.position = 'absolute';
-        brushDiv.style.top = e.pageY - this.offsetTop + "px";
-        brushDiv.style.left = e.pageX - this.offsetLeft + "px";
+        brushDiv.style.top = event.pageY - this.offsetTop + "px";
+        brushDiv.style.left = event.pageX - this.offsetLeft + "px";
         canvasAreaVar.appendChild(brushDiv);
 };
+
+// function stop(){
+//     clearInterval(enablePaint);
+// }
+
+var canvasAreaVar = document.getElementById('canvasArea');
+//canvasAreaVar.addEventListener('mousedown', start);
+canvasAreaVar.addEventListener('click',paintColor);
+//canvasAreaVar.addEventListener('mouseup', stop);
 
 var eraserButtonVar = document.createElement('button');
 eraserButtonVar.id = 'eraserButton';
@@ -124,3 +134,13 @@ var brushSizeExampleVar = document.createElement('div');
 brushSizeExampleVar.id = 'brushSizeExample';
 brushSizeExampleVar.style = 'height: 5px; width: 5px; background-color: black;';
 document.getElementById('brushSizeDisplay').appendChild(brushSizeExampleVar);
+
+var clearButtonVar = document.createElement('button');
+clearButtonVar.id = 'clearButton';
+clearButtonVar.innerHTML = "Clear";
+clearButtonVar.addEventListener('click', clearCanvas);
+document.getElementById('paletteWrapper').appendChild(clearButtonVar);
+
+function clearCanvas(){
+    document.getElementById('canvasArea').innerHTML = "";
+}
