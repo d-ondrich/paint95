@@ -175,6 +175,9 @@ function saveCanvas(){
     canvasSaveName = JSON.stringify(canvasSaveName);
     canvasAreaVar = JSON.stringify(canvasAreaVar);
     localStorage.setItem(canvasSaveName, canvasAreaVar);
+    if (canvasSaveName != "null"){
+        document.getElementById("fileName").innerHTML = JSON.parse(canvasSaveName);
+    }
 }
 
 var loadButtonVar = document.createElement('button');
@@ -187,4 +190,7 @@ function loadCanvas(){
     var canvasLoadName = prompt("Enter file name to load:");
     canvasLoadName = JSON.stringify(canvasLoadName);
     document.getElementById('canvasArea').innerHTML = JSON.parse(localStorage.getItem(canvasLoadName));
+    if (canvasLoadName != "null"){
+        document.getElementById("fileName").innerHTML = JSON.parse(canvasLoadName);
+    }
 }
