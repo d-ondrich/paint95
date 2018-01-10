@@ -1,6 +1,4 @@
-var programHomeDiv = document.createElement('div');
-programHomeDiv.id = 'programHome';
-document.getElementById('mainDiv').appendChild(programHomeDiv);
+$('<div/>').attr('id','programHome').appendTo('#mainDiv');
 
 var functionalityWrapperDiv = document.createElement('div');
 functionalityWrapperDiv.setAttribute('id', 'functionalityWrapper');
