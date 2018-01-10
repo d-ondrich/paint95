@@ -1,10 +1,7 @@
 $('<div/>').attr('id','programHome').appendTo('#mainDiv');
 
-var functionalityWrapperDiv = document.createElement('div');
-functionalityWrapperDiv.setAttribute('id', 'functionalityWrapper');
-functionalityWrapperDiv.setAttribute('height', '300px');
-functionalityWrapperDiv.setAttribute('background-color', 'rgb(156, 154, 154);');
-document.getElementById('programHome').appendChild(functionalityWrapperDiv);
+$('<div/>').attr('id', 'functionalityWrapper').css({"background-color": "rgb(156, 154, 154)", "height": "300px"});
+$('#functionalityWrapper').appendTo($('#programHome'));
 
 var paintBoardVar = document.createElement('div');
 paintBoardVar.id = 'paintBoard';
