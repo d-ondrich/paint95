@@ -2,24 +2,9 @@ $('<div/>').attr('id','programHome').appendTo('#mainDiv');
 
 $('<div/>').attr('id', 'functionalityWrapper').appendTo($('#programHome'));
 
-// var paintBoardVar = document.createElement('div');
-// paintBoardVar.id = 'paintBoard';
-// paintBoardVar.style = "width: 100%;";
-// document.getElementById('programHome').appendChild(paintBoardVar);
-
 $('<div/>').attr('id', 'paintBoard').appendTo($('#programHome'));
 
-// var paletteWrapperVar = document.createElement('div');
-// paletteWrapperVar.id = 'paletteWrapper';
-// document.getElementById('paintBoard').appendChild(paletteWrapperVar);
-
 $('<div/>').attr('id', 'paletteWrapper').appendTo($('#paintBoard'));
-
-
-// var canvas = document.createElement('div');
-// canvas.setAttribute('id', 'canvasArea');
-// canvas.style = "background: white; height: 500px; width: 500px; border: solid 2px black; position:relative;";
-// paintBoardVar.appendChild(canvas);
 
 $('<div/>').attr('id', 'canvasArea').appendTo($('#paintBoard'));
 
@@ -99,34 +84,11 @@ $('#canvasArea').on('mousedown', start)
 .on('mouseup', stop)
 .on('mouseout', stop)
 
-// canvasAreaVar.addEventListener('mousedown', start);
-// canvasAreaVar.addEventListener('mousedown',paintSingleColor);
-// canvasAreaVar.addEventListener('mousemove', paintColor);
-// canvasAreaVar.addEventListener('mouseup', stop);
-// canvasAreaVar.addEventListener('mouseout', stop);
-
-// var eraserButtonVar = document.createElement('button');
-// eraserButtonVar.id = 'eraserButton';
-// eraserButtonVar.innerHTML = "Eraser";
-// eraserButtonVar.isSelected = false;
-// eraserButtonVar.addEventListener('click', colorSelection);
-// document.getElementById('paletteWrapper').appendChild(eraserButtonVar);
-
 $('<button/>').attr('id', 'eraserButton').text('Eraser').click(colorSelection).appendTo($('#paletteWrapper'));
 $('#eraserButton').isSelected = false;
 
-// var brushSizeWrapperVar = document.createElement('div');
-// brushSizeWrapperVar.id = 'brushSizeWrapper';
-// brushSizeWrapperVar.style = 'display: flex;'
-// document.getElementById('paletteWrapper').appendChild(brushSizeWrapperVar);
 
 $('<div/>').attr('id', 'brushSizeWrapper').css({'display':'flex'}).appendTo($('#paletteWrapper'));
-
-// var plusButtonVar = document.createElement('button');
-// plusButtonVar.id = 'plusButton';
-// plusButtonVar.innerHTML = "+";
-// plusButtonVar.addEventListener('click', increaseBrushSize);
-// document.getElementById('brushSizeWrapper').appendChild(plusButtonVar);
 
 $('<button/>').attr('id', 'plusButton').text('+').click(increaseBrushSize).appendTo($('#brushSizeWrapper'));
 
@@ -140,23 +102,7 @@ function increaseBrushSize(){
     }
 }
 
-// var brushSizeDisplayVar = document.createElement('div');
-// brushSizeDisplayVar.style = 'height: 35px; width: 35px; background-color: white; border: solid 2px black;';
-// brushSizeDisplayVar.style.display = 'flex';
-// brushSizeDisplayVar.style.justifyContent = 'center';
-// brushSizeDisplayVar.style.alignItems = 'center';
-// brushSizeDisplayVar.id = 'brushSizeDisplay';
-// document.getElementById('brushSizeWrapper').appendChild(brushSizeDisplayVar);
-
 $('<div/>').attr('id', 'brushSizeDisplay').appendTo($('#brushSizeWrapper'));
-
-
-
-// var minusButtonVar = document.createElement('button');
-// minusButtonVar.id = 'minusButton';
-// minusButtonVar.innerHTML = "-";
-// minusButtonVar.addEventListener('click', decreaseBrushSize);
-// document.getElementById('brushSizeWrapper').appendChild(minusButtonVar);
 
 $('<button/>').attr('id', 'minusButton').text('-').click(decreaseBrushSize).appendTo($('#brushSizeWrapper'));
 
@@ -169,30 +115,13 @@ function decreaseBrushSize(){
     }
 }
 
-// var brushSizeExampleVar = document.createElement('div');
-// brushSizeExampleVar.id = 'brushSizeExample';
-// brushSizeExampleVar.style = 'height: 5px; width: 5px; background-color: black;';
-// document.getElementById('brushSizeDisplay').appendChild(brushSizeExampleVar);
-
 $('<div/>').attr('id', 'brushSizeExample').appendTo($('#brushSizeDisplay'));
-
-// var clearButtonVar = document.createElement('button');
-// clearButtonVar.id = 'clearButton';
-// clearButtonVar.innerHTML = "Clear";
-// clearButtonVar.addEventListener('click', clearCanvas);
-// document.getElementById('paletteWrapper').appendChild(clearButtonVar);
 
 $('<button/>').attr('id', 'clearButton').text('Clear').click(clearCanvas).appendTo($('#paletteWrapper'));
 
 function clearCanvas(){
     document.getElementById('canvasArea').innerHTML = "";
 }
-
-// var saveButtonVar = document.createElement('button');
-// saveButtonVar.id = 'saveButton';
-// saveButtonVar.innerHTML = "Save";
-// saveButtonVar.addEventListener('click', saveCanvas);
-// document.getElementById('paletteWrapper').appendChild(saveButtonVar);
 
 $('<button/>').attr('id', 'saveButton').text('Save').click(saveCanvas).appendTo($('#paletteWrapper'));
 
@@ -206,12 +135,6 @@ function saveCanvas(){
         document.getElementById("fileName").innerHTML = JSON.parse(canvasSaveName);
     }
 }
-
-// var loadButtonVar = document.createElement('button');
-// loadButtonVar.id = 'loadButton';
-// loadButtonVar.innerHTML = "Load";
-// loadButtonVar.addEventListener('click', loadCanvas);
-// document.getElementById('paletteWrapper').appendChild(loadButtonVar);
 
 $('<button/>').attr('id', 'loadButton').text('Load').click(loadCanvas).appendTo($('#paletteWrapper'));
 
