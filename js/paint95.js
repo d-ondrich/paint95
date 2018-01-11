@@ -1,30 +1,30 @@
-$('<div/>').attr('id','programHome').appendTo('#mainDiv');
-$('<div/>').attr('id', 'functionalityWrapper').appendTo($('#programHome'));
-$('<div/>').attr('id', 'paintBoard').appendTo($('#programHome'));
-$('<div/>').attr('id', 'colorWrapper').appendTo($('#programHome'));
-
-$('<div/>').attr('id', 'paletteWrapper').appendTo($('#paintBoard'));
-$('<div/>').attr('id', 'canvasArea').appendTo($('#paintBoard'));
-
-$('<div/>').attr('id', 'colorPalette').appendTo($('#colorWrapper'));
-
-$('<button/>').attr('id', 'eraserButton').text('Eraser').click(colorSelection).appendTo($('#paletteWrapper'));
-$('#eraserButton').isSelected = false;
-
-$('<div/>').attr('id', 'brushSizeWrapper').appendTo($('#paletteWrapper'));
-
-$('<button/>').attr('id', 'plusButton').text('+').click(increaseBrushSize).appendTo($('#brushSizeWrapper'));
-$('<div/>').attr('id', 'brushSizeDisplay').appendTo($('#brushSizeWrapper'));
-$('<div/>').attr('id', 'brushSizeExample').appendTo($('#brushSizeDisplay'));
-$('<button/>').attr('id', 'minusButton').text('-').click(decreaseBrushSize).appendTo($('#brushSizeWrapper'));
-
-
-
-$('<button/>').attr('id', 'clearButton').text('Clear').click(clearCanvas).appendTo($('#paletteWrapper'));
-$('<button/>').attr('id', 'saveButton').text('Save').click(saveCanvas).appendTo($('#paletteWrapper'));
-$('<button/>').attr('id', 'loadButton').text('Load').click(loadCanvas).appendTo($('#paletteWrapper'));
-
 var Paint = {}
+
+Paint.createElement = function(){
+    $('<div/>').attr('id','programHome').appendTo('#mainDiv');
+    $('<div/>').attr('id', 'functionalityWrapper').appendTo($('#programHome'));
+    $('<div/>').attr('id', 'paintBoard').appendTo($('#programHome'));
+    $('<div/>').attr('id', 'colorWrapper').appendTo($('#programHome'));
+
+    $('<div/>').attr('id', 'paletteWrapper').appendTo($('#paintBoard'));
+    $('<div/>').attr('id', 'canvasArea').appendTo($('#paintBoard'));
+
+    $('<div/>').attr('id', 'colorPalette').appendTo($('#colorWrapper'));
+
+    $('<button/>').attr('id', 'eraserButton').text('Eraser').click(Paint.colorSelection).appendTo($('#paletteWrapper'));
+    $('#eraserButton').isSelected = false;
+
+    $('<div/>').attr('id', 'brushSizeWrapper').appendTo($('#paletteWrapper'));
+
+    $('<button/>').attr('id', 'plusButton').text('+').click(increaseBrushSize).appendTo($('#brushSizeWrapper'));
+    $('<div/>').attr('id', 'brushSizeDisplay').appendTo($('#brushSizeWrapper'));
+    $('<div/>').attr('id', 'brushSizeExample').appendTo($('#brushSizeDisplay'));
+    $('<button/>').attr('id', 'minusButton').text('-').click(decreaseBrushSize).appendTo($('#brushSizeWrapper'));
+
+    $('<button/>').attr('id', 'clearButton').text('Clear').click(clearCanvas).appendTo($('#paletteWrapper'));
+    $('<button/>').attr('id', 'saveButton').text('Save').click(saveCanvas).appendTo($('#paletteWrapper'));
+    $('<button/>').attr('id', 'loadButton').text('Load').click(loadCanvas).appendTo($('#paletteWrapper'));
+}
 
 Paint.createColorPallette = function(){
     Paint.colorArray = ["black", "white", "blue", "red", "green", "orange", "pink", "purple" ];
@@ -35,19 +35,18 @@ Paint.createColorPallette = function(){
         colorButton.style= "background-Color: " + Paint.colorArray[k] + "; height: 30px; width: 30px;";
         colorButton.isSelected = false;
         colorButton.id = Paint.colorArray[k];
-        colorButton.addEventListener('click', colorSelection);
+        colorButton.addEventListener('click', Paint.colorSelection);
         document.getElementById("colorPalette").appendChild(colorButton);
     }
-
 }
 
 
-function colorSelection(){
-    if (this.id == 'eraserButton'){
+Paint.colorSelection = function(){
+    if ($(this).attr('id') == 'eraserButton'){
         Paint.currentPaintBrushColor = 'white';
     } else {
-    Paint.currentPaintBrushColor = this.id;
-    document.getElementById('brushSizeExample').style.backgroundColor = Paint.currentPaintBrushColor;
+    Paint.currentPaintBrushColor = $(this).attr('id');
+    $('#brushSizeExample').css({'background-color':Paint.currentPaintBrushColor});
     }
 }
 
@@ -151,6 +150,7 @@ Paint.init = function(){
     Paint.allowPaint = false;
     Paint.brushSize = '5px';
     Paint.currentPaintBrushColor = 'black';
+    Paint.createElement();
     Paint.createColorPallette();
 
 
