@@ -37,6 +37,7 @@
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
+    width: 100%;
 }
 #paletteWrapper{
     height: 500px; 
@@ -68,4 +69,14 @@
     width: 300px;
 
 }
-
+#functionalityWrapper{
+    background-color: rgb(156, 154, 154);
+    height: 300px;
+}
+#canvasArea{
+    background: white; 
+    height: 500px; 
+    width: 500px;
+    border: solid 2px black;
+    position: relative;
+}
