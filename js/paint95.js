@@ -8,25 +8,42 @@ $('<div/>').attr('id', 'paletteWrapper').appendTo($('#paintBoard'));
 
 $('<div/>').attr('id', 'canvasArea').appendTo($('#paintBoard'));
 
-var colorArray = ["black", "white", "blue", "red", "green", "orange", "pink", "purple" ];
+$('<div/>').attr('id', 'colorWrapper').appendTo($('#programHome'));
 
-var colorWrapperVar = document.createElement('div');
-colorWrapperVar.id = 'colorWrapper';
-document.getElementById('programHome').appendChild(colorWrapperVar);
+$('<div/>').attr('id', 'colorPalette').appendTo($('#colorWrapper'));
 
-var colorPaletteVar = document.createElement('div');
-colorPaletteVar.id = 'colorPalette';
-document.getElementById('colorWrapper').appendChild(colorPaletteVar);
+$('<button/>').attr('id', 'eraserButton').text('Eraser').click(colorSelection).appendTo($('#paletteWrapper'));
+$('#eraserButton').isSelected = false;
 
-for (var k = 0; k < 8; k++){
-    var colorButton = document.createElement('button');
-    colorButton.class = "colorButton";
-    colorButton.style= "background-Color: " + colorArray[k] + "; height: 30px; width: 30px;";
-    colorButton.isSelected = false;
-    colorButton.id = colorArray[k];
-    colorButton.addEventListener('click', colorSelection);
-    document.getElementById("colorPalette").appendChild(colorButton);
+$('<div/>').attr('id', 'brushSizeWrapper').appendTo($('#paletteWrapper'));
+
+$('<button/>').attr('id', 'plusButton').text('+').click(increaseBrushSize).appendTo($('#brushSizeWrapper'));
+$('<button/>').attr('id', 'minusButton').text('-').click(decreaseBrushSize).appendTo($('#brushSizeWrapper'));
+
+$('<div/>').attr('id', 'brushSizeDisplay').appendTo($('#brushSizeWrapper'));
+$('<div/>').attr('id', 'brushSizeExample').appendTo($('#brushSizeDisplay'));
+
+$('<button/>').attr('id', 'clearButton').text('Clear').click(clearCanvas).appendTo($('#paletteWrapper'));
+$('<button/>').attr('id', 'saveButton').text('Save').click(saveCanvas).appendTo($('#paletteWrapper'));
+$('<button/>').attr('id', 'loadButton').text('Load').click(loadCanvas).appendTo($('#paletteWrapper'));
+
+var Paint = {}
+
+Paint.createColorPallette = function(){
+    Paint.colorArray = ["black", "white", "blue", "red", "green", "orange", "pink", "purple" ];
+
+    for (var k = 0; k < Paint.colorArray.length; k++){
+        var colorButton = document.createElement('button');
+        colorButton.class = "colorButton";
+        colorButton.style= "background-Color: " + Paint.colorArray[k] + "; height: 30px; width: 30px;";
+        colorButton.isSelected = false;
+        colorButton.id = Paint.colorArray[k];
+        colorButton.addEventListener('click', colorSelection);
+        document.getElementById("colorPalette").appendChild(colorButton);
+    }
+
 }
+
 var currentPaintBrushColor = 'black';
 function colorSelection(){
     if (this.id == 'eraserButton'){
@@ -77,20 +94,13 @@ function stop(){
     allowPaint = false;
 }
 
-//var canvasAreaVar = document.getElementById('canvasArea');
 $('#canvasArea').on('mousedown', start)
 .on('mousedown',paintSingleColor)
 .on('mousemove', paintColor)
 .on('mouseup', stop)
 .on('mouseout', stop)
 
-$('<button/>').attr('id', 'eraserButton').text('Eraser').click(colorSelection).appendTo($('#paletteWrapper'));
-$('#eraserButton').isSelected = false;
 
-
-$('<div/>').attr('id', 'brushSizeWrapper').css({'display':'flex'}).appendTo($('#paletteWrapper'));
-
-$('<button/>').attr('id', 'plusButton').text('+').click(increaseBrushSize).appendTo($('#brushSizeWrapper'));
 
 
 function increaseBrushSize(){
@@ -102,9 +112,7 @@ function increaseBrushSize(){
     }
 }
 
-$('<div/>').attr('id', 'brushSizeDisplay').appendTo($('#brushSizeWrapper'));
 
-$('<button/>').attr('id', 'minusButton').text('-').click(decreaseBrushSize).appendTo($('#brushSizeWrapper'));
 
 function decreaseBrushSize(){
     if (parseInt(brushSize) > 1){
@@ -115,15 +123,13 @@ function decreaseBrushSize(){
     }
 }
 
-$('<div/>').attr('id', 'brushSizeExample').appendTo($('#brushSizeDisplay'));
 
-$('<button/>').attr('id', 'clearButton').text('Clear').click(clearCanvas).appendTo($('#paletteWrapper'));
 
 function clearCanvas(){
     document.getElementById('canvasArea').innerHTML = "";
 }
 
-$('<button/>').attr('id', 'saveButton').text('Save').click(saveCanvas).appendTo($('#paletteWrapper'));
+
 
 function saveCanvas(){
     var canvasSaveName = prompt("Enter file name:");
@@ -136,7 +142,7 @@ function saveCanvas(){
     }
 }
 
-$('<button/>').attr('id', 'loadButton').text('Load').click(loadCanvas).appendTo($('#paletteWrapper'));
+
 
 function loadCanvas(){
     var canvasLoadName = prompt("Enter file name to load:");
@@ -146,3 +152,5 @@ function loadCanvas(){
         document.getElementById("fileName").innerHTML = JSON.parse(canvasLoadName);
     }
 }
+
+Paint.createColorPallette()

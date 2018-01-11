@@ -80,7 +80,9 @@
     border: solid 2px black;
     position: relative;
 }
-
+#brushSizeWrapper{
+    display: flex;
+}
 #brushSizeDisplay{
     display: flex;
     justify-content: center; 
