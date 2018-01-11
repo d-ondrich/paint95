@@ -107,12 +107,14 @@ Paint.decreaseBrushSize = function(){
 }
 
 Paint.clearCanvas = function(){
-    document.getElementById('canvasArea').innerHTML = "";
+    //document.getElementById('canvasArea').innerHTML = "";
+    $('#canvasArea').html("");
 }
 
 Paint.saveCanvas = function(){
     var canvasSaveName = prompt("Enter file name:");
-    var canvasAreaVar = document.getElementById('canvasArea').innerHTML;
+    //var canvasAreaVar = document.getElementById('canvasArea').innerHTML;
+    var canvasAreaVar = $('#canvasArea').html()
     canvasSaveName = JSON.stringify(canvasSaveName);
     canvasAreaVar = JSON.stringify(canvasAreaVar);
     localStorage.setItem(canvasSaveName, canvasAreaVar);
@@ -124,7 +126,8 @@ Paint.saveCanvas = function(){
 Paint.loadCanvas = function(){
     var canvasLoadName = prompt("Enter file name to load:");
     canvasLoadName = JSON.stringify(canvasLoadName);
-    document.getElementById('canvasArea').innerHTML = JSON.parse(localStorage.getItem(canvasLoadName));
+    //document.getElementById('canvasArea').innerHTML = JSON.parse(localStorage.getItem(canvasLoadName));
+    $('#canvasArea').html(JSON.parse(localStorage.getItem(canvasLoadName)));
     if (canvasLoadName != "null"){
         document.getElementById("fileName").innerHTML = JSON.parse(canvasLoadName);
     }
@@ -136,8 +139,6 @@ Paint.init = function(){
     Paint.currentPaintBrushColor = 'black';
     Paint.createElement();
     Paint.createColorPallette();
-
-
 }
 
 
