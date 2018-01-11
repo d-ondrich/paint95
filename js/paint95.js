@@ -1,14 +1,10 @@
 $('<div/>').attr('id','programHome').appendTo('#mainDiv');
-
 $('<div/>').attr('id', 'functionalityWrapper').appendTo($('#programHome'));
-
 $('<div/>').attr('id', 'paintBoard').appendTo($('#programHome'));
+$('<div/>').attr('id', 'colorWrapper').appendTo($('#programHome'));
 
 $('<div/>').attr('id', 'paletteWrapper').appendTo($('#paintBoard'));
-
 $('<div/>').attr('id', 'canvasArea').appendTo($('#paintBoard'));
-
-$('<div/>').attr('id', 'colorWrapper').appendTo($('#programHome'));
 
 $('<div/>').attr('id', 'colorPalette').appendTo($('#colorWrapper'));
 
@@ -53,22 +49,19 @@ function colorSelection(){
     document.getElementById('brushSizeExample').style.backgroundColor = currentPaintBrushColor;
     }
 }
-var brushSize = '5px';
 
-//var enablePaint;
-var allowPaint = false;
 
 function start(){
-    allowPaint = true;
+    Paint.allowPaint = true;
     //enablePaint = setInterval(paintColor, 100);
 }
 
 function paintColor(event){
-    if (allowPaint){
+    if (Paint.allowPaint){
         var canvasAreaVar = document.getElementById('canvasArea');
             var brushDiv = document.createElement('div'); 
-            brushDiv.style.height = brushSize;
-            brushDiv.style.width = brushSize;
+            brushDiv.style.height = Paint.brushSize;
+            brushDiv.style.width = Paint.brushSize;
             brushDiv.style.backgroundColor = currentPaintBrushColor;
             brushDiv.style.position = 'absolute';
             brushDiv.style.top = event.pageY - this.offsetTop + "px";
@@ -80,8 +73,8 @@ function paintColor(event){
 function paintSingleColor(event){
     var canvasAreaVar = document.getElementById('canvasArea');
         var brushDiv = document.createElement('div'); 
-        brushDiv.style.height = brushSize;
-        brushDiv.style.width = brushSize;
+        brushDiv.style.height = Paint.brushSize;
+        brushDiv.style.width = Paint.brushSize;
         brushDiv.style.backgroundColor = currentPaintBrushColor;
         brushDiv.style.position = 'absolute';
         brushDiv.style.top = event.pageY - this.offsetTop + "px";
@@ -91,7 +84,7 @@ function paintSingleColor(event){
 
 function stop(){
     //clearInterval(enablePaint);
-    allowPaint = false;
+    Paint.allowPaint = false;
 }
 
 $('#canvasArea').on('mousedown', start)
@@ -104,22 +97,22 @@ $('#canvasArea').on('mousedown', start)
 
 
 function increaseBrushSize(){
-    if (parseInt(brushSize) < 25){
-        brushSize = parseInt(brushSize) + 1;
-        brushSize = brushSize + 'px';
-        document.getElementById('brushSizeExample').style.height = brushSize;
-        document.getElementById('brushSizeExample').style.width = brushSize;
+    if (parseInt(Paint.brushSize) < 25){
+        Paint.brushSize = parseInt(Paint.brushSize) + 1;
+        Paint.brushSize = Paint.brushSize + 'px';
+        document.getElementById('brushSizeExample').style.height = Paint.brushSize;
+        document.getElementById('brushSizeExample').style.width = Paint.brushSize;
     }
 }
 
 
 
 function decreaseBrushSize(){
-    if (parseInt(brushSize) > 1){
-        brushSize = parseInt(brushSize) - 1;
-        brushSize = brushSize + 'px';
-        document.getElementById('brushSizeExample').style.height = brushSize;
-        document.getElementById('brushSizeExample').style.width = brushSize;
+    if (parseInt(Paint.brushSize) > 1){
+        Paint.brushSize = parseInt(Paint.brushSize) - 1;
+        Paint.brushSize = Paint.brushSize + 'px';
+        document.getElementById('brushSizeExample').style.height = Paint.brushSize;
+        document.getElementById('brushSizeExample').style.width = Paint.brushSize;
     }
 }
 
@@ -153,4 +146,14 @@ function loadCanvas(){
     }
 }
 
-Paint.createColorPallette()
+Paint.init = function(){
+    Paint.allowPaint = false;
+    Paint.brushSize = '5px';
+    Paint.createColorPallette();
+
+
+}
+
+
+Paint.init()
+
