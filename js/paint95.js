@@ -16,19 +16,24 @@ Paint.createElement = function(){
 
     $('<div/>').attr('id', 'brushSizeWrapper').appendTo($('#paletteWrapper'));
 
-    $('<button/>').attr('id', 'plusButton').text('+').click(increaseBrushSize).appendTo($('#brushSizeWrapper'));
+    $('<button/>').attr('id', 'plusButton').text('+').click(Paint.increaseBrushSize).appendTo($('#brushSizeWrapper'));
     $('<div/>').attr('id', 'brushSizeDisplay').appendTo($('#brushSizeWrapper'));
     $('<div/>').attr('id', 'brushSizeExample').appendTo($('#brushSizeDisplay'));
-    $('<button/>').attr('id', 'minusButton').text('-').click(decreaseBrushSize).appendTo($('#brushSizeWrapper'));
+    $('<button/>').attr('id', 'minusButton').text('-').click(Paint.decreaseBrushSize).appendTo($('#brushSizeWrapper'));
 
-    $('<button/>').attr('id', 'clearButton').text('Clear').click(clearCanvas).appendTo($('#paletteWrapper'));
-    $('<button/>').attr('id', 'saveButton').text('Save').click(saveCanvas).appendTo($('#paletteWrapper'));
-    $('<button/>').attr('id', 'loadButton').text('Load').click(loadCanvas).appendTo($('#paletteWrapper'));
+    $('<button/>').attr('id', 'clearButton').text('Clear').click(Paint.clearCanvas).appendTo($('#paletteWrapper'));
+    $('<button/>').attr('id', 'saveButton').text('Save').click(Paint.saveCanvas).appendTo($('#paletteWrapper'));
+    $('<button/>').attr('id', 'loadButton').text('Load').click(Paint.loadCanvas).appendTo($('#paletteWrapper'));
+
+    $('#canvasArea').on('mousedown', Paint.start)
+    .on('mousedown',Paint.paintSingleColor)
+    .on('mousemove', Paint.paintColor)
+    .on('mouseup', Paint.stop)
+    .on('mouseout', Paint.stop)
 }
 
 Paint.createColorPallette = function(){
     Paint.colorArray = ["black", "white", "blue", "red", "green", "orange", "pink", "purple" ];
-
     for (var k = 0; k < Paint.colorArray.length; k++){
         var colorButton = document.createElement('button');
         colorButton.class = "colorButton";
@@ -40,7 +45,6 @@ Paint.createColorPallette = function(){
     }
 }
 
-
 Paint.colorSelection = function(){
     if ($(this).attr('id') == 'eraserButton'){
         Paint.currentPaintBrushColor = 'white';
@@ -50,13 +54,11 @@ Paint.colorSelection = function(){
     }
 }
 
-
-function start(){
+Paint.start = function(){
     Paint.allowPaint = true;
-    //enablePaint = setInterval(paintColor, 100);
 }
 
-function paintColor(event){
+Paint.paintColor = function(event){
     if (Paint.allowPaint){
         var canvasAreaVar = document.getElementById('canvasArea');
             var brushDiv = document.createElement('div'); 
@@ -70,7 +72,7 @@ function paintColor(event){
     }
 };
 
-function paintSingleColor(event){
+Paint.paintSingleColor = function(event){
     var canvasAreaVar = document.getElementById('canvasArea');
         var brushDiv = document.createElement('div'); 
         brushDiv.style.height = Paint.brushSize;
@@ -82,21 +84,11 @@ function paintSingleColor(event){
         canvasAreaVar.appendChild(brushDiv);
 };
 
-function stop(){
-    //clearInterval(enablePaint);
+Paint.stop = function(){
     Paint.allowPaint = false;
 }
 
-$('#canvasArea').on('mousedown', start)
-.on('mousedown',paintSingleColor)
-.on('mousemove', paintColor)
-.on('mouseup', stop)
-.on('mouseout', stop)
-
-
-
-
-function increaseBrushSize(){
+Paint.increaseBrushSize = function(){
     if (parseInt(Paint.brushSize) < 25){
         Paint.brushSize = parseInt(Paint.brushSize) + 1;
         Paint.brushSize = Paint.brushSize + 'px';
@@ -105,9 +97,7 @@ function increaseBrushSize(){
     }
 }
 
-
-
-function decreaseBrushSize(){
+Paint.decreaseBrushSize = function(){
     if (parseInt(Paint.brushSize) > 1){
         Paint.brushSize = parseInt(Paint.brushSize) - 1;
         Paint.brushSize = Paint.brushSize + 'px';
@@ -116,15 +106,11 @@ function decreaseBrushSize(){
     }
 }
 
-
-
-function clearCanvas(){
+Paint.clearCanvas = function(){
     document.getElementById('canvasArea').innerHTML = "";
 }
 
-
-
-function saveCanvas(){
+Paint.saveCanvas = function(){
     var canvasSaveName = prompt("Enter file name:");
     var canvasAreaVar = document.getElementById('canvasArea').innerHTML;
     canvasSaveName = JSON.stringify(canvasSaveName);
@@ -135,9 +121,7 @@ function saveCanvas(){
     }
 }
 
-
-
-function loadCanvas(){
+Paint.loadCanvas = function(){
     var canvasLoadName = prompt("Enter file name to load:");
     canvasLoadName = JSON.stringify(canvasLoadName);
     document.getElementById('canvasArea').innerHTML = JSON.parse(localStorage.getItem(canvasLoadName));
