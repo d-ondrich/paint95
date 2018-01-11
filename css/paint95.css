@@ -71,7 +71,7 @@
 }
 #functionalityWrapper{
     background-color: rgb(156, 154, 154);
-    height: 300px;
+    height: 30%;
 }
 #canvasArea{
     background: white; 
@@ -79,4 +79,19 @@
     width: 500px;
     border: solid 2px black;
     position: relative;
+}
+
+#brushSizeDisplay{
+    display: flex;
+    justify-content: center; 
+    align-items: center;
+    height: 35px;
+    width: 35px;
+    background-color:white;
+    border: solid 2px black;
+}
+#brushSizeExample{
+    height: 5px; 
+    width: 5px; 
+    background-color: black;
 }

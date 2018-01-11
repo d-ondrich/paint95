@@ -148,9 +148,7 @@ function increaseBrushSize(){
 // brushSizeDisplayVar.id = 'brushSizeDisplay';
 // document.getElementById('brushSizeWrapper').appendChild(brushSizeDisplayVar);
 
-$('<div/>').attr('id', 'brushSizeDisplay')
-.css({'display':'flex','justify-content':'center','align-items':'center','height':'35px','width':'35px','background-color':'white','border':'solid 2px black'})
-.appendTo($('#brushSizeWrapper'));
+$('<div/>').attr('id', 'brushSizeDisplay').appendTo($('#brushSizeWrapper'));
 
 
 
@@ -176,9 +174,7 @@ function decreaseBrushSize(){
 // brushSizeExampleVar.style = 'height: 5px; width: 5px; background-color: black;';
 // document.getElementById('brushSizeDisplay').appendChild(brushSizeExampleVar);
 
-$('<div/>').attr('id', 'brushSizeExample')
-.css({'height': '5px', 'width': '5px', 'background-color': 'black'})
-.appendTo($('#brushSizeDisplay'));
+$('<div/>').attr('id', 'brushSizeExample').appendTo($('#brushSizeDisplay'));
 
 // var clearButtonVar = document.createElement('button');
 // clearButtonVar.id = 'clearButton';
