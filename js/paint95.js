@@ -14,10 +14,11 @@ $('#eraserButton').isSelected = false;
 $('<div/>').attr('id', 'brushSizeWrapper').appendTo($('#paletteWrapper'));
 
 $('<button/>').attr('id', 'plusButton').text('+').click(increaseBrushSize).appendTo($('#brushSizeWrapper'));
-$('<button/>').attr('id', 'minusButton').text('-').click(decreaseBrushSize).appendTo($('#brushSizeWrapper'));
-
 $('<div/>').attr('id', 'brushSizeDisplay').appendTo($('#brushSizeWrapper'));
 $('<div/>').attr('id', 'brushSizeExample').appendTo($('#brushSizeDisplay'));
+$('<button/>').attr('id', 'minusButton').text('-').click(decreaseBrushSize).appendTo($('#brushSizeWrapper'));
+
+
 
 $('<button/>').attr('id', 'clearButton').text('Clear').click(clearCanvas).appendTo($('#paletteWrapper'));
 $('<button/>').attr('id', 'saveButton').text('Save').click(saveCanvas).appendTo($('#paletteWrapper'));
@@ -40,13 +41,13 @@ Paint.createColorPallette = function(){
 
 }
 
-var currentPaintBrushColor = 'black';
+
 function colorSelection(){
     if (this.id == 'eraserButton'){
-        currentPaintBrushColor = 'white';
+        Paint.currentPaintBrushColor = 'white';
     } else {
-    currentPaintBrushColor = this.id;
-    document.getElementById('brushSizeExample').style.backgroundColor = currentPaintBrushColor;
+    Paint.currentPaintBrushColor = this.id;
+    document.getElementById('brushSizeExample').style.backgroundColor = Paint.currentPaintBrushColor;
     }
 }
 
@@ -62,7 +63,7 @@ function paintColor(event){
             var brushDiv = document.createElement('div'); 
             brushDiv.style.height = Paint.brushSize;
             brushDiv.style.width = Paint.brushSize;
-            brushDiv.style.backgroundColor = currentPaintBrushColor;
+            brushDiv.style.backgroundColor = Paint.currentPaintBrushColor;
             brushDiv.style.position = 'absolute';
             brushDiv.style.top = event.pageY - this.offsetTop + "px";
             brushDiv.style.left = event.pageX - this.offsetLeft + "px";
@@ -75,7 +76,7 @@ function paintSingleColor(event){
         var brushDiv = document.createElement('div'); 
         brushDiv.style.height = Paint.brushSize;
         brushDiv.style.width = Paint.brushSize;
-        brushDiv.style.backgroundColor = currentPaintBrushColor;
+        brushDiv.style.backgroundColor = Paint.currentPaintBrushColor;
         brushDiv.style.position = 'absolute';
         brushDiv.style.top = event.pageY - this.offsetTop + "px";
         brushDiv.style.left = event.pageX - this.offsetLeft + "px";
@@ -149,6 +150,7 @@ function loadCanvas(){
 Paint.init = function(){
     Paint.allowPaint = false;
     Paint.brushSize = '5px';
+    Paint.currentPaintBrushColor = 'black';
     Paint.createColorPallette();
 
 
