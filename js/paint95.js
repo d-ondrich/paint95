@@ -73,14 +73,17 @@ Paint.paintColor = function(event){
 };
 
 Paint.paintSingleColor = function(event){
-    var canvasAreaVar = document.getElementById('canvasArea');
-        var brushDiv = document.createElement('div'); 
-        brushDiv.style.height = Paint.brushSize;
-        brushDiv.style.width = Paint.brushSize;
-        brushDiv.style.backgroundColor = Paint.currentPaintBrushColor;
-        brushDiv.style.position = 'absolute';
-        brushDiv.style.top = event.pageY - this.offsetTop + "px";
-        brushDiv.style.left = event.pageX - this.offsetLeft + "px";
+    var canvasAreaVar = $('#canvasArea');
+        var brushDiv = $('<div/>'); 
+        brushDiv.css({'height':Paint.brushSize,'width':Paint.brushSize,
+        'background-color':Paint.currentPaintBrushColor,'position':'absolute','top':event.pageY - this.offsetTop + "px",
+        'left':event.pageX - this.offsetLeft + "px"});
+        //brushDiv.style.height = Paint.brushSize;
+        //brushDiv.style.width = Paint.brushSize;
+        //brushDiv.style.backgroundColor = Paint.currentPaintBrushColor;
+        //brushDiv.style.position = 'absolute';
+        // brushDiv.style.top = event.pageY - this.offsetTop + "px";
+        // brushDiv.style.left = event.pageX - this.offsetLeft + "px";
         canvasAreaVar.appendChild(brushDiv);
 };
 
