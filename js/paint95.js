@@ -35,13 +35,13 @@ Paint.createElement = function(){
 Paint.createColorPallette = function(){
     Paint.colorArray = ["black", "white", "blue", "red", "green", "orange", "pink", "purple" ];
     for (var k = 0; k < Paint.colorArray.length; k++){
-        var colorButton = document.createElement('button');
-        colorButton.class = "colorButton";
-        colorButton.style= "background-Color: " + Paint.colorArray[k] + "; height: 30px; width: 30px;";
+        var colorButton = $('<button/>');
+        colorButton.addClass("colorButton");
+        colorButton.css({"background-color":Paint.colorArray[k], 'height': '30px', 'width': '30px'});
         colorButton.isSelected = false;
-        colorButton.id = Paint.colorArray[k];
-        colorButton.addEventListener('click', Paint.colorSelection);
-        document.getElementById("colorPalette").appendChild(colorButton);
+        colorButton.attr('id',Paint.colorArray[k]);
+        colorButton.click(Paint.colorSelection);
+        $("#colorPalette").append(colorButton);
     }
 }
 
@@ -49,8 +49,8 @@ Paint.colorSelection = function(){
     if ($(this).attr('id') == 'eraserButton'){
         Paint.currentPaintBrushColor = 'white';
     } else {
-    Paint.currentPaintBrushColor = $(this).attr('id');
-    $('#brushSizeExample').css({'background-color':Paint.currentPaintBrushColor});
+        Paint.currentPaintBrushColor = $(this).attr('id');
+        $('#brushSizeExample').css({'background-color':Paint.currentPaintBrushColor});
     }
 }
 
@@ -60,31 +60,34 @@ Paint.start = function(){
 
 Paint.paintColor = function(event){
     if (Paint.allowPaint){
-        var canvasAreaVar = document.getElementById('canvasArea');
-            var brushDiv = document.createElement('div'); 
-            brushDiv.style.height = Paint.brushSize;
-            brushDiv.style.width = Paint.brushSize;
-            brushDiv.style.backgroundColor = Paint.currentPaintBrushColor;
-            brushDiv.style.position = 'absolute';
-            brushDiv.style.top = event.pageY - this.offsetTop + "px";
-            brushDiv.style.left = event.pageX - this.offsetLeft + "px";
-            canvasAreaVar.appendChild(brushDiv);
-    }
-};
-
-Paint.paintSingleColor = function(event){
-    var canvasAreaVar = $('#canvasArea');
+        var canvasAreaVar = $('#canvasArea');
         var brushDiv = $('<div/>'); 
         brushDiv.css({'height':Paint.brushSize,'width':Paint.brushSize,
-        'background-color':Paint.currentPaintBrushColor,'position':'absolute','top':event.pageY - this.offsetTop + "px",
-        'left':event.pageX - this.offsetLeft + "px"});
+        'background-color':Paint.currentPaintBrushColor,'position':'absolute','top':(event.pageY - this.offsetTop) + "px",
+        'left':(event.pageX - this.offsetLeft) + "px"});
         //brushDiv.style.height = Paint.brushSize;
         //brushDiv.style.width = Paint.brushSize;
         //brushDiv.style.backgroundColor = Paint.currentPaintBrushColor;
         //brushDiv.style.position = 'absolute';
         // brushDiv.style.top = event.pageY - this.offsetTop + "px";
         // brushDiv.style.left = event.pageX - this.offsetLeft + "px";
-        canvasAreaVar.appendChild(brushDiv);
+        canvasAreaVar.append(brushDiv);
+    }
+};
+
+Paint.paintSingleColor = function(event){
+    var canvasAreaVar = $('#canvasArea');
+    var brushDiv = $('<div/>'); 
+    brushDiv.css({'height':Paint.brushSize,'width':Paint.brushSize,
+    'background-color':Paint.currentPaintBrushColor,'position':'absolute','top':(event.pageY - this.offsetTop) + "px",
+    'left':(event.pageX - this.offsetLeft) + "px"});
+    //brushDiv.style.height = Paint.brushSize;
+    //brushDiv.style.width = Paint.brushSize;
+    //brushDiv.style.backgroundColor = Paint.currentPaintBrushColor;
+    //brushDiv.style.position = 'absolute';
+    // brushDiv.style.top = event.pageY - this.offsetTop + "px";
+    // brushDiv.style.left = event.pageX - this.offsetLeft + "px";
+    canvasAreaVar.append(brushDiv);
 };
 
 Paint.stop = function(){
