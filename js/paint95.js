@@ -92,8 +92,8 @@ Paint.increaseBrushSize = function(){
     if (parseInt(Paint.brushSize) < 25){
         Paint.brushSize = parseInt(Paint.brushSize) + 1;
         Paint.brushSize = Paint.brushSize + 'px';
-        document.getElementById('brushSizeExample').style.height = Paint.brushSize;
-        document.getElementById('brushSizeExample').style.width = Paint.brushSize;
+        $('#brushSizeExample').css({'height':Paint.brushSize});
+        $('#brushSizeExample').css({'width':Paint.brushSize});
     }
 }
 
