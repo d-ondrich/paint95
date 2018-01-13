@@ -101,19 +101,17 @@ Paint.decreaseBrushSize = function(){
     if (parseInt(Paint.brushSize) > 1){
         Paint.brushSize = parseInt(Paint.brushSize) - 1;
         Paint.brushSize = Paint.brushSize + 'px';
-        document.getElementById('brushSizeExample').style.height = Paint.brushSize;
-        document.getElementById('brushSizeExample').style.width = Paint.brushSize;
+        $('#brushSizeExample').css({'height':Paint.brushSize});
+        $('#brushSizeExample').css({'width':Paint.brushSize});
     }
 }
 
 Paint.clearCanvas = function(){
-    //document.getElementById('canvasArea').innerHTML = "";
     $('#canvasArea').html("");
 }
 
 Paint.saveCanvas = function(){
     var canvasSaveName = prompt("Enter file name:");
-    //var canvasAreaVar = document.getElementById('canvasArea').innerHTML;
     var canvasAreaVar = $('#canvasArea').html()
     canvasSaveName = JSON.stringify(canvasSaveName);
     canvasAreaVar = JSON.stringify(canvasAreaVar);
@@ -126,7 +124,6 @@ Paint.saveCanvas = function(){
 Paint.loadCanvas = function(){
     var canvasLoadName = prompt("Enter file name to load:");
     canvasLoadName = JSON.stringify(canvasLoadName);
-    //document.getElementById('canvasArea').innerHTML = JSON.parse(localStorage.getItem(canvasLoadName));
     $('#canvasArea').html(JSON.parse(localStorage.getItem(canvasLoadName)));
     if (canvasLoadName != "null"){
         $("#fileName").html(JSON.parse(canvasLoadName));
