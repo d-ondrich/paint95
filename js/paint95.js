@@ -119,7 +119,7 @@ Paint.saveCanvas = function(){
     canvasAreaVar = JSON.stringify(canvasAreaVar);
     localStorage.setItem(canvasSaveName, canvasAreaVar);
     if (canvasSaveName != "null"){
-        document.getElementById("fileName").innerHTML = JSON.parse(canvasSaveName);
+        $("#fileName").html(JSON.parse(canvasSaveName));
     }
 }
 
