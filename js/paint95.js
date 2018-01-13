@@ -129,7 +129,7 @@ Paint.loadCanvas = function(){
     //document.getElementById('canvasArea').innerHTML = JSON.parse(localStorage.getItem(canvasLoadName));
     $('#canvasArea').html(JSON.parse(localStorage.getItem(canvasLoadName)));
     if (canvasLoadName != "null"){
-        document.getElementById("fileName").innerHTML = JSON.parse(canvasLoadName);
+        $("#fileName").html(JSON.parse(canvasLoadName));
     }
 }
 
@@ -141,6 +141,7 @@ Paint.init = function(){
     Paint.createColorPallette();
 }
 
+$(document).ready(Paint.init);
 
-Paint.init()
+
 
