@@ -20,7 +20,7 @@ Paint.createElement = function(){
 
     $('<button/>').attr('id', 'plusButton').text('+').click(Paint.increaseBrushSize).appendTo($('#brushSizeWrapper'));
     $('<div/>').attr('id', 'brushSizeDisplay').appendTo($('#brushSizeWrapper'));
-    $('<div/>').attr('id', 'brushSizeExample').appendTo($('#brushSizeDisplay'));
+    $('<div/>').attr('id', 'brushSizeExample').css({'border-radius': '5px/5px'}).appendTo($('#brushSizeDisplay'));
     $('<button/>').attr('id', 'minusButton').text('-').click(Paint.decreaseBrushSize).appendTo($('#brushSizeWrapper'));
 
     $('<button/>').attr('id', 'clearButton').text('Clear').click(Paint.clearCanvas).appendTo($('#paletteWrapper'));
@@ -78,7 +78,7 @@ Paint.redraw = function() {
     Paint.ctx.strokeStyle = Paint.currentPaintBrushColor;
     Paint.ctx.lineJoin = "round";
     Paint.ctx.lineWidth = Paint.brushSize;
-              
+    Paint.ctx.stroke();        
     for(var i=0; i < Paint.clickX.length; i++) {		
         Paint.ctx.beginPath();
         if(Paint.clickDrag[i] && i){
@@ -87,9 +87,8 @@ Paint.redraw = function() {
             Paint.ctx.moveTo(Paint.clickX[i]-1, Paint.clickY[i]);
         }
         Paint.ctx.lineTo(Paint.clickX[i], Paint.clickY[i]);
-        Paint.ctx.closePath();
-        Paint.ctx.stroke();
     }
+    Paint.ctx.closePath();
   }
 
 Paint.paintSingleColor = function(event){
