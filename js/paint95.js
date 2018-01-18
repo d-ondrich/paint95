@@ -138,7 +138,7 @@ Paint.clearCanvas = function(){
 
 Paint.saveCanvas = function(){
     var canvasSaveName = prompt("Enter file name:");
-    var canvasAreaVar = $('#canvasArea').html()
+    var canvasAreaVar = [Paint.clickX, Paint.clickY, Paint.clickDrag];
     canvasSaveName = JSON.stringify(canvasSaveName);
     canvasAreaVar = JSON.stringify(canvasAreaVar);
     localStorage.setItem(canvasSaveName, canvasAreaVar);
@@ -150,7 +150,10 @@ Paint.saveCanvas = function(){
 Paint.loadCanvas = function(){
     var canvasLoadName = prompt("Enter file name to load:");
     canvasLoadName = JSON.stringify(canvasLoadName);
-    $('#canvasArea').html(JSON.parse(localStorage.getItem(canvasLoadName)));
+    Paint.clickX = JSON.parse(localStorage.getItem(canvasLoadName))[0];
+    Paint.clickY = JSON.parse(localStorage.getItem(canvasLoadName))[1];
+    Paint.clickDrag = JSON.parse(localStorage.getItem(canvasLoadName))[2];
+    Paint.redraw()
     if (canvasLoadName != "null"){
         $("#fileName").html(JSON.parse(canvasLoadName));
     }
