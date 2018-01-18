@@ -11,7 +11,6 @@ Paint.createElement = function(){
     Paint.c = $("#canvasArea")[0];
     Paint.ctx = $("#canvasArea")[0].getContext('2d');
 
-
     $('<div/>').attr('id', 'colorPalette').appendTo($('#colorWrapper'));
 
     $('<button/>').attr('id', 'eraserButton').text('Eraser').click(Paint.colorSelection).appendTo($('#paletteWrapper'));
@@ -28,8 +27,7 @@ Paint.createElement = function(){
     $('<button/>').attr('id', 'saveButton').text('Save').click(Paint.saveCanvas).appendTo($('#paletteWrapper'));
     $('<button/>').attr('id', 'loadButton').text('Load').click(Paint.loadCanvas).appendTo($('#paletteWrapper'));
 
-    $('#canvasArea').on('click',Paint.paintSingleColor)
-    .on('mousedown', Paint.start)
+    $('#canvasArea').on('mousedown', Paint.paintSingleColor)
     .on('mousemove', Paint.paintColor)
     .on('mouseup', Paint.stop)
     .on('mouseout', Paint.stop);
@@ -57,24 +55,6 @@ Paint.colorSelection = function(){
     }
 }
 
-
-Paint.paintColor = function(event){
-    if (Paint.allowPaint){
-        var canvasAreaVar = $('#canvasArea');
-        var brushDiv = $('<div/>'); 
-        brushDiv.css({'height':Paint.brushSize,'width':Paint.brushSize,
-        'background-color':Paint.currentPaintBrushColor,'position':'absolute','top':(event.pageY - this.offsetTop) + "px",
-        'left':(event.pageX - this.offsetLeft) + "px"});
-        //brushDiv.style.height = Paint.brushSize;
-        //brushDiv.style.width = Paint.brushSize;
-        //brushDiv.style.backgroundColor = Paint.currentPaintBrushColor;
-        //brushDiv.style.position = 'absolute';
-        // brushDiv.style.top = event.pageY - this.offsetTop + "px";
-        // brushDiv.style.left = event.pageX - this.offsetLeft + "px";
-        canvasAreaVar.append(brushDiv);
-    }
-};
-
 Paint.getMousePos = function(canvas, evt) {
     var rect = Paint.c.getBoundingClientRect(), // abs. size of element
         scaleX = Paint.c.width / rect.width,    // relationship bitmap vs. element for X
@@ -87,54 +67,47 @@ Paint.getMousePos = function(canvas, evt) {
   }
 
 Paint.addClickPosition = function(x, y, dragging){
-    clickX.push(x);
-    clickY.push(y);
-    clickDrag.push(dragging);
+    Paint.clickX.push(x);
+    Paint.clickY.push(y);
+    Paint.clickDrag.push(dragging);
 }
 
 Paint.redraw = function() {
     Paint.ctx.clearRect(0, 0, Paint.ctx.width, Paint.ctx.height); // Clears the canvas
-    
-    Paint.ctx.strokeStyle = "#df4b26";
+
+    Paint.ctx.strokeStyle = Paint.currentPaintBrushColor;
     Paint.ctx.lineJoin = "round";
     Paint.ctx.lineWidth = Paint.brushSize;
               
-    for(var i=0; i < clickX.length; i++) {		
+    for(var i=0; i < Paint.clickX.length; i++) {		
         Paint.ctx.beginPath();
-      if(clickDrag[i] && i){
-        Paint.ctx.moveTo(clickX[i-1], clickY[i-1]);
-       }else{
-        Paint.ctx.moveTo(clickX[i]-1, clickY[i]);
-       }
-       Paint.ctx.lineTo(clickX[i], clickY[i]);
-       Paint.ctx.closePath();
-       Paint.ctx.stroke();
+        if(Paint.clickDrag[i] && i){
+            Paint.ctx.moveTo(Paint.clickX[i-1], Paint.clickY[i-1]);
+        }else{
+            Paint.ctx.moveTo(Paint.clickX[i]-1, Paint.clickY[i]);
+        }
+        Paint.ctx.lineTo(Paint.clickX[i], Paint.clickY[i]);
+        Paint.ctx.closePath();
+        Paint.ctx.stroke();
     }
   }
 
 Paint.paintSingleColor = function(event){
-    // var canvasAreaVar = $('#canvasArea');
-    // var brushDiv = $('<div/>'); 
-    // brushDiv.css({'height':Paint.brushSize,'width':Paint.brushSize,
-    // 'background-color':Paint.currentPaintBrushColor,'position':'absolute','top':(event.pageY - this.offsetTop) + "px",
-    // 'left':(event.pageX - this.offsetLeft) + "px"});
+
     var posistion = Paint.getMousePos(Paint.c, event);
 
-    Paint.ctx.fillStyle = Paint.currentPaintBrushColor;
-    Paint.ctx.fillRect (posistion.x, posistion.y, Paint.brushSize, Paint.brushSize);
-
-    //brushDiv.style.height = Paint.brushSize;
-    //brushDiv.style.width = Paint.brushSize;
-    //brushDiv.style.backgroundColor = Paint.currentPaintBrushColor;
-    //brushDiv.style.position = 'absolute';
-    // brushDiv.style.top = event.pageY - this.offsetTop + "px";
-    // brushDiv.style.left = event.pageX - this.offsetLeft + "px";
-    // canvasAreaVar.append(brushDiv);
+    Paint.allowPaint = true;
+    Paint.addClickPosition(posistion.x, posistion.y);
+    Paint.redraw();
 };
 
-Paint.start = function(){
-    Paint.allowPaint = true;
-}
+Paint.paintColor = function(event){
+    if (Paint.allowPaint){
+        var posistion = Paint.getMousePos(Paint.c, event);
+        Paint.addClickPosition(posistion.x, posistion.y, true);
+        Paint.redraw();
+    }
+};
 
 Paint.stop = function(){
     Paint.allowPaint = false;
@@ -157,7 +130,7 @@ Paint.decreaseBrushSize = function(){
 }
 
 Paint.clearCanvas = function(){
-    $('#canvasArea').html("");
+    Paint.ctx.clearRect(0, 0, Paint.c.width, Paint.c.height);
 }
 
 Paint.saveCanvas = function(){
