@@ -7,7 +7,10 @@ Paint.createElement = function(){
     $('<div/>').attr('id', 'colorWrapper').appendTo($('#programHome'));
 
     $('<div/>').attr('id', 'paletteWrapper').appendTo($('#paintBoard'));
-    $('<div/>').attr('id', 'canvasArea').appendTo($('#paintBoard'));
+    $('<canvas width="500" height="500"/>').attr('id', 'canvasArea').appendTo($('#paintBoard'));
+    Paint.c = $("#canvasArea")[0];
+    Paint.ctx = $("#canvasArea")[0].getContext('2d');
+
 
     $('<div/>').attr('id', 'colorPalette').appendTo($('#colorWrapper'));
 
@@ -25,11 +28,11 @@ Paint.createElement = function(){
     $('<button/>').attr('id', 'saveButton').text('Save').click(Paint.saveCanvas).appendTo($('#paletteWrapper'));
     $('<button/>').attr('id', 'loadButton').text('Load').click(Paint.loadCanvas).appendTo($('#paletteWrapper'));
 
-    $('#canvasArea').on('mousedown', Paint.start)
-    .on('mousedown',Paint.paintSingleColor)
+    $('#canvasArea').on('click',Paint.paintSingleColor)
+    .on('mousedown', Paint.start)
     .on('mousemove', Paint.paintColor)
     .on('mouseup', Paint.stop)
-    .on('mouseout', Paint.stop)
+    .on('mouseout', Paint.stop);
 }
 
 Paint.createColorPallette = function(){
@@ -54,9 +57,6 @@ Paint.colorSelection = function(){
     }
 }
 
-Paint.start = function(){
-    Paint.allowPaint = true;
-}
 
 Paint.paintColor = function(event){
     if (Paint.allowPaint){
@@ -75,20 +75,66 @@ Paint.paintColor = function(event){
     }
 };
 
+Paint.getMousePos = function(canvas, evt) {
+    var rect = Paint.c.getBoundingClientRect(), // abs. size of element
+        scaleX = Paint.c.width / rect.width,    // relationship bitmap vs. element for X
+        scaleY = Paint.c.height / rect.height;  // relationship bitmap vs. element for Y
+  
+    return {
+      x: (evt.clientX - rect.left) * scaleX,   // scale mouse coordinates after they have
+      y: (evt.clientY - rect.top) * scaleY     // been adjusted to be relative to element
+    }
+  }
+
+Paint.addClickPosition = function(x, y, dragging){
+    clickX.push(x);
+    clickY.push(y);
+    clickDrag.push(dragging);
+}
+
+Paint.redraw = function() {
+    Paint.ctx.clearRect(0, 0, Paint.ctx.width, Paint.ctx.height); // Clears the canvas
+    
+    Paint.ctx.strokeStyle = "#df4b26";
+    Paint.ctx.lineJoin = "round";
+    Paint.ctx.lineWidth = Paint.brushSize;
+              
+    for(var i=0; i < clickX.length; i++) {		
+        Paint.ctx.beginPath();
+      if(clickDrag[i] && i){
+        Paint.ctx.moveTo(clickX[i-1], clickY[i-1]);
+       }else{
+        Paint.ctx.moveTo(clickX[i]-1, clickY[i]);
+       }
+       Paint.ctx.lineTo(clickX[i], clickY[i]);
+       Paint.ctx.closePath();
+       Paint.ctx.stroke();
+    }
+  }
+
 Paint.paintSingleColor = function(event){
-    var canvasAreaVar = $('#canvasArea');
-    var brushDiv = $('<div/>'); 
-    brushDiv.css({'height':Paint.brushSize,'width':Paint.brushSize,
-    'background-color':Paint.currentPaintBrushColor,'position':'absolute','top':(event.pageY - this.offsetTop) + "px",
-    'left':(event.pageX - this.offsetLeft) + "px"});
+    // var canvasAreaVar = $('#canvasArea');
+    // var brushDiv = $('<div/>'); 
+    // brushDiv.css({'height':Paint.brushSize,'width':Paint.brushSize,
+    // 'background-color':Paint.currentPaintBrushColor,'position':'absolute','top':(event.pageY - this.offsetTop) + "px",
+    // 'left':(event.pageX - this.offsetLeft) + "px"});
+    var posistion = Paint.getMousePos(Paint.c, event);
+
+    Paint.ctx.fillStyle = Paint.currentPaintBrushColor;
+    Paint.ctx.fillRect (posistion.x, posistion.y, Paint.brushSize, Paint.brushSize);
+
     //brushDiv.style.height = Paint.brushSize;
     //brushDiv.style.width = Paint.brushSize;
     //brushDiv.style.backgroundColor = Paint.currentPaintBrushColor;
     //brushDiv.style.position = 'absolute';
     // brushDiv.style.top = event.pageY - this.offsetTop + "px";
     // brushDiv.style.left = event.pageX - this.offsetLeft + "px";
-    canvasAreaVar.append(brushDiv);
+    // canvasAreaVar.append(brushDiv);
 };
+
+Paint.start = function(){
+    Paint.allowPaint = true;
+}
 
 Paint.stop = function(){
     Paint.allowPaint = false;
@@ -96,19 +142,17 @@ Paint.stop = function(){
 
 Paint.increaseBrushSize = function(){
     if (parseInt(Paint.brushSize) < 25){
-        Paint.brushSize = parseInt(Paint.brushSize) + 1;
-        Paint.brushSize = Paint.brushSize + 'px';
-        $('#brushSizeExample').css({'height':Paint.brushSize});
-        $('#brushSizeExample').css({'width':Paint.brushSize});
+        Paint.brushSize += 1
+        $('#brushSizeExample').css({'height':Paint.brushSize + 'px'});
+        $('#brushSizeExample').css({'width':Paint.brushSize + 'px'});
     }
 }
 
 Paint.decreaseBrushSize = function(){
     if (parseInt(Paint.brushSize) > 1){
-        Paint.brushSize = parseInt(Paint.brushSize) - 1;
-        Paint.brushSize = Paint.brushSize + 'px';
-        $('#brushSizeExample').css({'height':Paint.brushSize});
-        $('#brushSizeExample').css({'width':Paint.brushSize});
+        Paint.brushSize -= 1
+        $('#brushSizeExample').css({'height':Paint.brushSize + 'px'});
+        $('#brushSizeExample').css({'width':Paint.brushSize + 'px'});
     }
 }
 
@@ -138,7 +182,10 @@ Paint.loadCanvas = function(){
 
 Paint.init = function(){
     Paint.allowPaint = false;
-    Paint.brushSize = '5px';
+    Paint.clickX = new Array();
+    Paint.clickY = new Array();
+    Paint.clickDrag = new Array();
+    Paint.brushSize = 5;
     Paint.currentPaintBrushColor = 'black';
     Paint.createElement();
     Paint.createColorPallette();
