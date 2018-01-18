@@ -131,6 +131,9 @@ Paint.decreaseBrushSize = function(){
 
 Paint.clearCanvas = function(){
     Paint.ctx.clearRect(0, 0, Paint.c.width, Paint.c.height);
+    Paint.clickX = [];
+    Paint.clickY = [];
+    Paint.clickDrag = [];
 }
 
 Paint.saveCanvas = function(){
