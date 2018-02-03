@@ -61,8 +61,8 @@ Paint.getMousePos = function(canvas, evt) {
         scaleY = Paint.c.height / rect.height;  // relationship bitmap vs. element for Y
   
     return {
-      x: (evt.clientX - rect.left) * scaleX,   // scale mouse coordinates after they have
-      y: (evt.clientY - rect.top) * scaleY     // been adjusted to be relative to element
+        x: (evt.clientX - rect.left) * scaleX,   // scale mouse coordinates after they have
+        y: (evt.clientY - rect.top) * scaleY     // been adjusted to be relative to element
     }
   }
 
@@ -84,7 +84,7 @@ Paint.redraw = function() {
         if(Paint.clickDrag[i] && i){
             Paint.ctx.moveTo(Paint.clickX[i-1], Paint.clickY[i-1]);
         }else{
-            Paint.ctx.moveTo(Paint.clickX[i]-1, Paint.clickY[i]);
+            Paint.ctx.moveTo(Paint.clickX[i], Paint.clickY[i]);
         }
         Paint.ctx.lineTo(Paint.clickX[i], Paint.clickY[i]);
     }
@@ -92,9 +92,7 @@ Paint.redraw = function() {
   }
 
 Paint.paintSingleColor = function(event){
-
     var posistion = Paint.getMousePos(Paint.c, event);
-
     Paint.allowPaint = true;
     Paint.addClickPosition(posistion.x, posistion.y);
     Paint.redraw();
